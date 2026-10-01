@@ -56,7 +56,7 @@ class ScreenCapturer(
         // Android 14+ requires the callback before createVirtualDisplay.
         projection.registerCallback(object : MediaProjection.Callback() {
             override fun onStop() {
-                main.post(onStopped)
+                main.post { onStopped() }
             }
         }, main)
 

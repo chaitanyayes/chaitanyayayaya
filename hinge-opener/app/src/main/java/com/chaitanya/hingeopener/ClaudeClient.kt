@@ -69,9 +69,9 @@ class ClaudeClient(private val prefs: Prefs) {
             .header("content-type", "application/json")
         if (withFallback) builder.header("anthropic-beta", FALLBACK_BETA)
         val request = builder.post(body.toString().toRequestBody(JSON)).build()
-        try {
+        return try {
             http.newCall(request).execute().use { r ->
-                return HttpResult(r.code, r.body?.string().orEmpty(), r.header("retry-after"))
+                HttpResult(r.code, r.body?.string().orEmpty(), r.header("retry-after"))
             }
         } catch (e: UnknownHostException) {
             throw ApiException("No internet connection.")
